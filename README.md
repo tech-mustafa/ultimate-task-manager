@@ -29,9 +29,16 @@ The Ultimate Task Manager is a task management application built with React, Mat
 │   │   ├── TaskForm.js
 │   │   ├── TaskItem.js
 │   │   └── TaskList.js
+|   ├── pages
+│   │   ├── AddTask.js
+│   │   └── EditTask.js
+│   │   └── Home.js
+│   │   └── ViewTask.js
 │   ├── redux
 │   │   ├── store.js
 │   │   └── tasksSlice.js
+│   ├── utils
+│   │   ├── Constants.js
 │   ├── App.js
 │   ├── index.js
 │   └── styles.css
@@ -44,6 +51,17 @@ The Ultimate Task Manager is a task management application built with React, Mat
 - **TaskForm.js**: Form component for adding and editing tasks.
 - **TaskItem.js**: Component for displaying individual tasks with options to edit or delete.
 - **TaskList.js**: Component for displaying the list of tasks with search, filter, and sort functionalities.
+
+### Pages
+
+- **AddTask.js**: Wrapper for TaskForm component to add a task.
+- **EditTask.js**: Wrapper for TaskForm component to edit a task.
+- **Home.js**: Entry point of the app to have list and filters on the page.
+- **ViewTask.js**: View task component for displaying individual task in detail.
+
+### Utils
+
+- **Constants.js**: Helper file for the app to store all the constants values.
 
 ### Redux
 
