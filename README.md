@@ -73,7 +73,7 @@ The Ultimate Task Manager is a task management application built with React, Mat
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/tech-mustafa/ultimate-task-manager.git
    cd ultimate-task-manager
    ```
 
