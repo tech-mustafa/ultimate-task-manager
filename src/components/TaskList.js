@@ -35,8 +35,10 @@ const TaskList = () => {
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       const searchTermMatch =
-        task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase());
+        task.title.toLowerCase().includes(searchTerm.toLowerCase().trim()) ||
+        task.description
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase().trim());
 
       const statusMatch = status === "All" || task.status === status;
 
@@ -143,7 +145,7 @@ const TaskList = () => {
         </Button>
       </Box>
       {sortedTasks.map((task) => (
-        <TaskItem key={task.id} task={task} searchTerm={searchTerm} />
+        <TaskItem key={task.id} task={task} searchTerm={searchTerm?.trim()} />
       ))}
     </Box>
   );

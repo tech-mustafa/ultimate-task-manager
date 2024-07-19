@@ -26,33 +26,45 @@ const TaskItem = ({ task, searchTerm }) => {
     }
   };
 
-  const findWord = (w, term, newTtle) => {
-    const index = w.indexOf(term);
+  const findWord = (w, word, term, newTtle, removeSpace) => {
+    const index = word.indexOf(term);
     const firstLetters = w.substring(0, index);
     const second = w.substring(index, index + term.length);
     const third = w.substring(index + term.length);
-    //we have word that contains the searchterm
-    //break the word into 3 parts, 1. initial letters, 2 highlighted letter, 3 end letters
-    let title = (
+    // remove the space if the search is whithin the word and add a space if the search is in different word
+    const prefix = removeSpace ? (
+      <>
+        {newTtle}
+        {firstLetters}
+      </>
+    ) : (
       <>
         {newTtle} {firstLetters}
-        <span style={{ backgroundColor: "yellow" }}>{second}</span>
-        {third}
       </>
     );
-    // term.length create a sbstr, find if word matched, reccursion of the function;
-
+    let title = (
+      <>
+        {prefix}
+        <span style={{ backgroundColor: "yellow" }}>{second}</span>
+      </>
+    );
     const newString = w.substring(index + term.length);
     const hasMore = newString.includes(term);
     if (hasMore) {
-      // title = findWord(newString, term, newTtle);
+      title = findWord(newString.toLowerCase(), newString, term, title, true);
+    } else {
+      title = (
+        <>
+          {title}
+          {third}
+        </>
+      );
     }
-
     return title;
   };
+
   const renderTitle = (title) => {
     //return the title with highlihted term
-
     const isKeywordAvailable = title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -67,7 +79,7 @@ const TaskItem = ({ task, searchTerm }) => {
       } else {
         newTtle = (
           <>
-            {newTtle} {word}
+            {newTtle} {w}
           </>
         );
       }
