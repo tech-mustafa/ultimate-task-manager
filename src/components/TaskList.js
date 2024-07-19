@@ -143,7 +143,7 @@ const TaskList = () => {
         </Button>
       </Box>
       {sortedTasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem key={task.id} task={task} searchTerm={searchTerm} />
       ))}
     </Box>
   );

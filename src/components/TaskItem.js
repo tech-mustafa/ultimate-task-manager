@@ -16,7 +16,7 @@ import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, searchTerm }) => {
   const [hovered, setHovered] = useState(false);
   const dispatch = useDispatch();
 
@@ -24,6 +24,55 @@ const TaskItem = ({ task }) => {
     if (window.confirm(`Are you sure you want to delete "${task.title}"?`)) {
       dispatch(deleteTask(task.id));
     }
+  };
+
+  const findWord = (w, term, newTtle) => {
+    const index = w.indexOf(term);
+    const firstLetters = w.substring(0, index);
+    const second = w.substring(index, index + term.length);
+    const third = w.substring(index + term.length);
+    //we have word that contains the searchterm
+    //break the word into 3 parts, 1. initial letters, 2 highlighted letter, 3 end letters
+    let title = (
+      <>
+        {newTtle} {firstLetters}
+        <span style={{ backgroundColor: "yellow" }}>{second}</span>
+        {third}
+      </>
+    );
+    // term.length create a sbstr, find if word matched, reccursion of the function;
+
+    const newString = w.substring(index + term.length);
+    const hasMore = newString.includes(term);
+    if (hasMore) {
+      // title = findWord(newString, term, newTtle);
+    }
+
+    return title;
+  };
+  const renderTitle = (title) => {
+    //return the title with highlihted term
+
+    const isKeywordAvailable = title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    if (!isKeywordAvailable || !searchTerm) return title;
+
+    let newTtle;
+    title.split(" ").forEach((w) => {
+      const word = w.toLowerCase();
+      const term = searchTerm.toLowerCase();
+      if (word.includes(term)) {
+        newTtle = findWord(w, word, term, newTtle);
+      } else {
+        newTtle = (
+          <>
+            {newTtle} {word}
+          </>
+        );
+      }
+    });
+    return newTtle;
   };
 
   return (
@@ -44,8 +93,10 @@ const TaskItem = ({ task }) => {
         </Grid>
         <Grid item xs={10}>
           <ListItemText
-            primary={task.title}
-            secondary={`Description: ${task.description} - Due: ${task.dueDate} - Priority: ${task.priority} - Status: ${task.status}`}
+            primary={renderTitle(task.title)}
+            secondary={renderTitle(
+              `Description: ${task.description} - Due: ${task.dueDate} - Priority: ${task.priority} - Status: ${task.status}`
+            )}
           />
         </Grid>
         <Grid item xs={2}>
